@@ -78,17 +78,18 @@ foreach ($directories AS $dir_name) {
                     "adult" => [],
                     "child" => [],
                 ];
-
-                $summary[$key]["adult"][] = [
-                    "count" => $data['adult'],
-                    "updated_time" => $data['updated_time'],
-                ];
-
-                $summary[$key]["child"][] = [
-                    "count" => $data['child'],
-                    "updated_time" => $data['updated_time'],
-                ];
             }
+
+
+            $summary[$key]["adult"][] = [
+                "count" => $data['adult'],
+                "updated_time" => $data['updated_time'],
+            ];
+
+            $summary[$key]["child"][] = [
+                "count" => $data['child'],
+                "updated_time" => $data['updated_time'],
+            ];
         }
     }
 }
