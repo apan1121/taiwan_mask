@@ -47,7 +47,7 @@ $update_date = date("Y_m_d", strtotime($updated_time));
 $update_time = date("H_i_s", strtotime($updated_time));
 
 
-$info_json = json_encode($info, JSON_PRETTY_PRINT + JSON_UNESCAPED_UNICODE);
+$info_json = json_encode($info, JSON_UNESCAPED_UNICODE);
 
 $history_path ="./log/history/{$update_date}";
 if (!is_dir($history_path)) {
@@ -95,7 +95,7 @@ foreach ($directories AS $dir_name) {
 }
 
 
-$info_json = json_encode($summary, JSON_PRETTY_PRINT + JSON_UNESCAPED_UNICODE);
+$info_json = json_encode($summary, JSON_UNESCAPED_UNICODE);
 
 $f = fopen($history_path."/summary.log", "w");
 fwrite($f, $info_json);
