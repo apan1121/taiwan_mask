@@ -96,9 +96,9 @@ foreach ($directories AS $dir_name) {
                         "count" => $data[$target_key],
                         "ctime" => $data['ctime'] ?? $data['updated_time'],
                     ];
-                    echo "$key  $target_key 紀錄\n";
+                    // echo "$key  $target_key 紀錄\n";
                 } else {
-                    echo "$key  $target_key 不紀錄\n";
+                    // echo "$key  $target_key 不紀錄\n";
                 }
             }
 
