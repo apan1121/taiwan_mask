@@ -24,11 +24,11 @@ $columns = [
     'phone',
     'adult',
     'child',
-    'updated_time'
+    'ctime'
 ];
 
 $info = [];
-$updated_time = "";
+$ctime = "";
 
 foreach ($data AS $item) {
     $item = str_replace(["\r\n", "\r", "\n"], '', $item);
@@ -39,13 +39,13 @@ foreach ($data AS $item) {
             $new_item[$columns[$index]] = $val;
         }
         $info[$new_item["id"]] = $new_item;
-        $updated_time = $new_item["updated_time"];
+        $ctime = $new_item["ctime"];
     }
 }
 
 
-$update_date = date("Y_m_d", strtotime($updated_time));
-$update_time = date("H_i_s", strtotime($updated_time));
+$update_date = date("Y_m_d", strtotime($ctime));
+$update_time = date("H_i_s", strtotime($ctime));
 
 
 $info_json = json_encode($info, JSON_UNESCAPED_UNICODE);
@@ -81,16 +81,40 @@ foreach ($directories AS $dir_name) {
                 ];
             }
 
+            /* 資料壓縮，跟上一次的值一樣 就不紀錄 */
+            foreach (['adult', 'child'] AS $target_key) {
+                $insert_flag = true;
+                if (count($summary[$key][$target_key]) > 0) {
+                    $total = count($summary[$key][$target_key]);
+                    if ($summary[$key][$target_key][ $total - 1]['count'] === $data[$target_key]) {
+                        $insert_flag = false;
+                    }
+                }
 
-            $summary[$key]["adult"][] = [
-                "count" => $data['adult'],
-                "updated_time" => $data['updated_time'],
-            ];
+                if (!!$insert_flag) {
+                    $summary[$key][$target_key][] = [
+                        "count" => $data[$target_key],
+                        "ctime" => $data['ctime'],
+                    ];
+                    echo "$key  $target_key 紀錄\n";
+                } else {
+                    echo "$key  $target_key 不紀錄\n";
+                }
+            }
 
-            $summary[$key]["child"][] = [
-                "count" => $data['child'],
-                "updated_time" => $data['updated_time'],
-            ];
+
+
+
+
+            // $summary[$key]["adult"][] = [
+            //     "count" => $data['adult'],
+            //     "ctime" => $data['ctime'],
+            // ];
+
+            // $summary[$key]["child"][] = [
+            //     "count" => $data['child'],
+            //     "ctime" => $data['ctime'],
+            // ];
         }
     }
 }
