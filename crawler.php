@@ -1,4 +1,5 @@
 <?php
+ini_set('memory_limit', '1024M');
 // $data = @file_get_contents('https://data.nhi.gov.tw/resource/mask/maskdata.csv');
 
 
