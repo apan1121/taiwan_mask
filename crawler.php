@@ -1,5 +1,16 @@
 <?php
-$data = @file_get_contents('https://data.nhi.gov.tw/resource/mask/maskdata.csv');
+// $data = @file_get_contents('https://data.nhi.gov.tw/resource/mask/maskdata.csv');
+
+
+$url = 'https://data.nhi.gov.tw/resource/mask/maskdata.csv';
+
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$data = curl_exec($ch);
+curl_close($ch);
+
 
 $data = explode("\n", $data);
 
@@ -17,6 +28,7 @@ $columns = [
 
 $info = [];
 $updated_time = "";
+
 foreach ($data AS $item) {
     $item = str_replace(["\r\n", "\r", "\n"], '', $item);
     if (!empty($item)) {
@@ -30,6 +42,7 @@ foreach ($data AS $item) {
     }
 }
 
+
 $update_date = date("Y_m_d", strtotime($updated_time));
 $update_time = date("H_i_s", strtotime($updated_time));
 
@@ -40,6 +53,7 @@ $history_path ="./log/history/{$update_date}";
 if (!is_dir($history_path)) {
     mkdir($history_path, 0777, true);
 }
+
 
 $f = fopen($history_path."/{$update_time}.log", "w");
 fwrite($f, $info_json);
