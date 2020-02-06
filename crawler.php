@@ -94,7 +94,7 @@ foreach ($directories AS $dir_name) {
                 if (!!$insert_flag) {
                     $summary[$key][$target_key][] = [
                         "count" => $data[$target_key],
-                        "ctime" => $data['ctime'],
+                        "ctime" => $data['ctime'] ?? $data['updated_time'],
                     ];
                     echo "$key  $target_key 紀錄\n";
                 } else {
